@@ -17,6 +17,12 @@
         </value>
       </li>
       <li Class="PatchOperationReplace">
+        <xpath>/Defs/HediffDef[defName="SmokeleafHigh"]/stages/li/capMods/li[child::capacity[text()="Consciousness"]]/offset</xpath>
+        <value>
+          <offset>-0.15</offset>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
         <xpath>/Defs/HediffDef[defName="SmokeleafTolerance"]/hediffGivers</xpath>
         <value>
           <hediffGivers>
