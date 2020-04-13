@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData>
+  <!-- Main -->
+  <LLLTitle>Leaf Like Life</LLLTitle>
+
+  <LLLConsciousnessLabel>Consciousness penalty</LLLConsciousnessLabel>
+  <LLLConsciousnessTooltip>The penalty to consciousness while a pawn is high on smokeleaf (Default: -15%; Vanilla: -30%)</LLLConsciousnessTooltip>
+  
+</LanguageData>
