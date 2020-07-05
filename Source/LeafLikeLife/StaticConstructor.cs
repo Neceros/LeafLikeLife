@@ -11,18 +11,37 @@ namespace LeafLikeLife
     static LLLStartUp()
     {
       // Loads right before main menu
-      LLLUtility.UpdateConsciousnessPenalty();
+      LLLUtility.UpdateAllChanges();
     }
   }
 
   public class LLLUtility
   {
-    public static void UpdateConsciousnessPenalty()
+    public static void UpdateAllChanges()
     {
-      //DefDatabase<HediffDef>.GetNamed("SmokeleafHigh").stages[0].capMods[0].offset = LLLModSettings.amountPenaltyConsciousness;
-      HediffDef.Named("SmokeleafHigh").
-        stages.Where((HediffStage stage) => stage.capMods.Any((PawnCapacityModifier mod) => mod.capacity == PawnCapacityDefOf.Consciousness)).First().
-        capMods.Where((PawnCapacityModifier mod) => mod.capacity == PawnCapacityDefOf.Consciousness).First().offset = LLLModSettings.amountPenaltyConsciousness;
+      // ThingDefOf.SmokeleafJoint.comps.Where(c => c is CompProperties_Drug).FirstOrDefault()
+      //HediffDef.Named("SmokeleafHigh").stages.Where((HediffStage stage) => stage.capMods.Any((PawnCapacityModifier mod) => mod.capacity == PawnCapacityDefOf.Consciousness)).First().capMods.Where((PawnCapacityModifier mod) => mod.capacity == PawnCapacityDefOf.Consciousness).First().offset = LLLModSettings.amountPenaltyConsciousness;
+      
+      HediffDef.Named("SmokeleafHigh").stages.Where(s => s.capMods.Any(m => m.capacity == PawnCapacityDefOf.Consciousness)).First().capMods.Where(m => m.capacity == PawnCapacityDefOf.Consciousness).First().offset = LLLModSettings.amountPenaltyConsciousness;
+      HediffDef.Named("SmokeleafHigh").stages.Where(s => s.capMods.Any(m => m.capacity == PawnCapacityDefOf.Moving)).First().capMods.Where(m => m.capacity == PawnCapacityDefOf.Moving).First().offset = LLLModSettings.amountPenaltyMovement;
+
+      IngestionOutcomeDoer_OffsetNeed restOffset = (IngestionOutcomeDoer_OffsetNeed)ThingDefOf.SmokeleafJoint.ingestible.outcomeDoers.Find(o => o is IngestionOutcomeDoer_OffsetNeed);
+      restOffset.offset = LLLModSettings.amountPenaltyRest;
+
+      HediffDef.Named("SmokeleafHigh").stages[0].hungerRateFactorOffset = LLLModSettings.amountHungerRate;
+
+      CompProperties_Drug comDrug = ThingDefOf.SmokeleafJoint.GetCompProperties<CompProperties_Drug>() as CompProperties_Drug;
+
+      comDrug.addictiveness = LLLModSettings.amountAddictiveness;
+      comDrug.minToleranceToAddict = LLLModSettings.amountToleranceToAddict;
+
+      HediffGiver_RandomDrugEffect hediffAsthma = HediffDef.Named("SmokeleafTolerance").hediffGivers[0] as HediffGiver_RandomDrugEffect;
+      HediffGiver_RandomDrugEffect hediffCancer = HediffDef.Named("SmokeleafTolerance").hediffGivers[1] as HediffGiver_RandomDrugEffect;
+
+      hediffAsthma.baseMtbDays = LLLModSettings.amountAsthmaDaysChance;
+      hediffCancer.baseMtbDays = LLLModSettings.amountCancerDaysChance;
+
+      ThoughtDef.Named("SmokeleafWithdrawal").stages[1].baseMoodEffect = LLLModSettings.amountPenaltyWithdrawal;
     }
   }
 }
